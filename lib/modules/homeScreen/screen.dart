@@ -8,8 +8,7 @@ class HomeScreen extends StatelessWidget {
       'avatar':
           'https://i.pinimg.com/originals/99/71/23/997123ba1bfc03b01c62848519c6c289.jpg',
       'status': 'active',
-      'lastTextedTime': DateTime.now()
-          .subtract(Duration(minutes: 15)), // Example: 15 minutes ago
+      'lastTextedTime': DateTime.now().subtract(Duration(minutes: 15)),
     },
     {
       'name': 'Wayne',
@@ -17,16 +16,14 @@ class HomeScreen extends StatelessWidget {
       'avatar':
           'https://www.slashfilm.com/img/gallery/christian-bale-claims-his-pay-for-american-psycho-was-less-than-the-films-make-up-artists/l-intro-1672278324.jpg',
       'status': 'offline',
-      'lastTextedTime':
-          DateTime.now().subtract(Duration(hours: 1)), // Example: 1 hour ago
+      'lastTextedTime': DateTime.now().subtract(Duration(hours: 1)),
     },
     {
       'name': 'Bruce',
       'lastMessage': 'How are you?',
       'avatar': 'https://i.insider.com/5de6ddd479d7571d25446737?width=700',
       'status': 'active',
-      'lastTextedTime':
-          DateTime.now().subtract(Duration(days: 1)), // Example: 1 day ago
+      'lastTextedTime': DateTime.now().subtract(Duration(days: 1)),
     },
     // Add more users as needed
   ];
@@ -42,28 +39,26 @@ class HomeScreen extends StatelessWidget {
         itemCount: userList.length,
         itemBuilder: (context, index) {
           return ListTile(
+            contentPadding: EdgeInsets.all(16.0),
             leading: CircleAvatar(
               backgroundImage: NetworkImage(userList[index]['avatar']),
             ),
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            title: Text(userList[index]['name']),
+            subtitle: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Text(userList[index]['name']),
-                    SizedBox(width: 8),
                     _buildStatusNotifier(userList[index]['status']),
+                    SizedBox(width: 8),
+                    Text(userList[index]['lastMessage']),
                   ],
                 ),
                 Text(
-                  userList[index]['lastMessage'],
+                  _formatLastTextedTime(userList[index]['lastTextedTime']),
                   style: TextStyle(color: Colors.grey),
                 ),
               ],
-            ),
-            subtitle: Text(
-              _formatLastTextedTime(userList[index]['lastTextedTime']),
-              style: TextStyle(color: Colors.grey),
             ),
             onTap: () {
               // Handle tapping on a user, e.g., navigate to a chat screen
