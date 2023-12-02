@@ -11,7 +11,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-      const Duration(seconds: 1),
+      const Duration(seconds: 2),
       () => Navigator.pushReplacementNamed(context, '/home'),
     );
   }
@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Icon(
               Icons.message,
               size: 100,
-              color: Colors.blue,
+              color: Color.fromARGB(255, 0, 29, 53),
             ),
             SizedBox(height: 16),
             Text(
