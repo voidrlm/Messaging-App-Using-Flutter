@@ -38,33 +38,47 @@ class HomeScreen extends StatelessWidget {
       body: ListView.builder(
         itemCount: userList.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            contentPadding: EdgeInsets.all(16.0),
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(userList[index]['avatar']),
-            ),
-            title: Text(userList[index]['name']),
-            subtitle: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    _buildStatusNotifier(userList[index]['status']),
-                    SizedBox(width: 8),
-                    Text(userList[index]['lastMessage']),
-                  ],
+          return Card(
+            elevation: 1.0,
+            margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            child: ListTile(
+              contentPadding: EdgeInsets.all(5.0),
+              leading: CircleAvatar(
+                radius: 30.0,
+                backgroundImage: NetworkImage(userList[index]['avatar']),
+              ),
+              title: Text(
+                userList[index]['name'],
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
                 ),
-                Text(
-                  _formatLastTextedTime(userList[index]['lastTextedTime']),
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ],
+              ),
+              subtitle: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      _buildStatusNotifier(userList[index]['status']),
+                      SizedBox(width: 8),
+                      Text(
+                        userList[index]['lastMessage'],
+                        style: TextStyle(color: Colors.black87),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    _formatLastTextedTime(userList[index]['lastTextedTime']),
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+              onTap: () {
+                // Handle tapping on a user, e.g., navigate to a chat screen
+                // For simplicity, you can print a message for now
+                print('Tapped on ${userList[index]['name']}');
+              },
             ),
-            onTap: () {
-              // Handle tapping on a user, e.g., navigate to a chat screen
-              // For simplicity, you can print a message for now
-              print('Tapped on ${userList[index]['name']}');
-            },
           );
         },
       ),
