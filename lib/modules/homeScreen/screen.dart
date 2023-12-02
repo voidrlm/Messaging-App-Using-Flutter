@@ -8,6 +8,8 @@ class HomeScreen extends StatelessWidget {
       'avatar':
           'https://i.pinimg.com/originals/99/71/23/997123ba1bfc03b01c62848519c6c289.jpg',
       'status': 'active',
+      'lastTextedTime': DateTime.now()
+          .subtract(Duration(minutes: 15)), // Example: 15 minutes ago
     },
     {
       'name': 'Wayne',
@@ -15,12 +17,16 @@ class HomeScreen extends StatelessWidget {
       'avatar':
           'https://www.slashfilm.com/img/gallery/christian-bale-claims-his-pay-for-american-psycho-was-less-than-the-films-make-up-artists/l-intro-1672278324.jpg',
       'status': 'offline',
+      'lastTextedTime':
+          DateTime.now().subtract(Duration(hours: 1)), // Example: 1 hour ago
     },
     {
       'name': 'Bruce',
       'lastMessage': 'How are you?',
       'avatar': 'https://i.insider.com/5de6ddd479d7571d25446737?width=700',
       'status': 'active',
+      'lastTextedTime':
+          DateTime.now().subtract(Duration(days: 1)), // Example: 1 day ago
     },
     // Add more users as needed
   ];
@@ -39,14 +45,26 @@ class HomeScreen extends StatelessWidget {
             leading: CircleAvatar(
               backgroundImage: NetworkImage(userList[index]['avatar']),
             ),
-            title: Row(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(userList[index]['name']),
-                SizedBox(width: 8),
-                _buildStatusNotifier(userList[index]['status']),
+                Row(
+                  children: [
+                    Text(userList[index]['name']),
+                    SizedBox(width: 8),
+                    _buildStatusNotifier(userList[index]['status']),
+                  ],
+                ),
+                Text(
+                  userList[index]['lastMessage'],
+                  style: TextStyle(color: Colors.grey),
+                ),
               ],
             ),
-            subtitle: Text(userList[index]['lastMessage']),
+            subtitle: Text(
+              _formatLastTextedTime(userList[index]['lastTextedTime']),
+              style: TextStyle(color: Colors.grey),
+            ),
             onTap: () {
               // Handle tapping on a user, e.g., navigate to a chat screen
               // For simplicity, you can print a message for now
@@ -64,10 +82,23 @@ class HomeScreen extends StatelessWidget {
       height: 10,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: status == 'active'
-            ? Colors.green
-            : const Color.fromARGB(255, 121, 121, 121),
+        color: status == 'active' ? Colors.green : Colors.red,
       ),
     );
+  }
+
+  String _formatLastTextedTime(DateTime lastTextedTime) {
+    final now = DateTime.now();
+    final difference = now.difference(lastTextedTime);
+
+    if (difference.inDays > 0) {
+      return '${difference.inDays}d ago';
+    } else if (difference.inHours > 0) {
+      return '${difference.inHours}h ago';
+    } else if (difference.inMinutes > 0) {
+      return '${difference.inMinutes}m ago';
+    } else {
+      return 'Just now';
+    }
   }
 }
