@@ -10,9 +10,9 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  List<Map<String, String>> messages = [
-    {'sender': 'receiver', 'message': 'Hello!'},
-    {'sender': 'user', 'message': 'Hi there!'},
+  List<Map<String, dynamic>> messages = [
+    {'sender': 'receiver', 'message': 'Hello!', 'timestamp': DateTime.now()},
+    {'sender': 'user', 'message': 'Hi there!', 'timestamp': DateTime.now()},
   ];
 
   TextEditingController _messageController = TextEditingController();
@@ -39,26 +39,38 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget _buildMessage(Map<String, String> message) {
+  Widget _buildMessage(Map<String, dynamic> message) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: Align(
-        alignment: message['sender'] == 'user'
-            ? Alignment.centerRight
-            : Alignment.centerLeft,
-        child: Container(
-          padding: EdgeInsets.all(12.0),
-          decoration: BoxDecoration(
-            color: message['sender'] == 'user' ? Colors.blue : Colors.grey[300],
-            borderRadius: BorderRadius.circular(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            _formatMessageTimestamp(message['timestamp']),
+            style: TextStyle(color: Colors.grey),
           ),
-          child: Text(
-            message['message']!,
-            style: TextStyle(
-              color: message['sender'] == 'user' ? Colors.white : Colors.black,
+          Align(
+            alignment: message['sender'] == 'user'
+                ? Alignment.centerRight
+                : Alignment.centerLeft,
+            child: Container(
+              padding: EdgeInsets.all(12.0),
+              decoration: BoxDecoration(
+                color: message['sender'] == 'user'
+                    ? Colors.blue
+                    : Colors.grey[300],
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Text(
+                message['message'],
+                style: TextStyle(
+                  color:
+                      message['sender'] == 'user' ? Colors.white : Colors.black,
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -73,6 +85,10 @@ class _ChatScreenState extends State<ChatScreen> {
               controller: _messageController,
               decoration: InputDecoration(
                 hintText: 'Type a message...',
+                contentPadding: EdgeInsets.all(12.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
               ),
             ),
           ),
@@ -87,11 +103,26 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  String _formatMessageTimestamp(DateTime timestamp) {
+    final now = DateTime.now();
+    final difference = now.difference(timestamp);
+
+    if (difference.inDays > 0) {
+      return '${timestamp.day}/${timestamp.month}/${timestamp.year}';
+    } else {
+      return '${timestamp.hour}:${timestamp.minute}';
+    }
+  }
+
   void _sendMessage() {
     String messageText = _messageController.text.trim();
     if (messageText.isNotEmpty) {
       setState(() {
-        messages.add({'sender': 'user', 'message': messageText});
+        messages.add({
+          'sender': 'user',
+          'message': messageText,
+          'timestamp': DateTime.now(),
+        });
         _messageController.clear();
       });
     }
