@@ -82,7 +82,9 @@ class HomeScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        ChatScreen(userName: userList[index]['name']),
+                        ChatScreen(userName: userList[index]['name'],
+                      userStatus: userList[index]['status'],
+                    ),
                   ),
                 );
               },

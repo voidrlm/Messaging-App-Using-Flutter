@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
   final String userName;
+  final String userStatus;
 
-  ChatScreen({required this.userName});
+  ChatScreen({required this.userName, required this.userStatus});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -25,6 +26,7 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: Column(
         children: [
+          _buildUserStatus(),
           Expanded(
             child: ListView.builder(
               itemCount: messages.length,
@@ -35,6 +37,17 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           _buildMessageInput(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildUserStatus() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      color: widget.userStatus == 'active' ? Colors.green : Colors.red,
+      child: Text(
+        widget.userStatus == 'active' ? 'Online' : 'Offline',
+        style: TextStyle(color: Colors.white),
       ),
     );
   }
