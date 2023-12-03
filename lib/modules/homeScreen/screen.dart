@@ -10,6 +10,7 @@ class HomeScreen extends StatelessWidget {
           'https://i.pinimg.com/originals/99/71/23/997123ba1bfc03b01c62848519c6c289.jpg',
       'status': 'active',
       'lastTextedTime': DateTime.now().subtract(Duration(minutes: 15)),
+      'timestamp': DateTime.now()
     },
     {
       'name': 'Wayne',
@@ -18,6 +19,7 @@ class HomeScreen extends StatelessWidget {
           'https://www.slashfilm.com/img/gallery/christian-bale-claims-his-pay-for-american-psycho-was-less-than-the-films-make-up-artists/l-intro-1672278324.jpg',
       'status': 'offline',
       'lastTextedTime': DateTime.now().subtract(Duration(hours: 1)),
+      'timestamp': DateTime.now()
     },
     {
       'name': 'Bruce',
@@ -25,6 +27,7 @@ class HomeScreen extends StatelessWidget {
       'avatar': 'https://i.insider.com/5de6ddd479d7571d25446737?width=700',
       'status': 'active',
       'lastTextedTime': DateTime.now().subtract(Duration(days: 1)),
+      'timestamp': DateTime.now()
     },
     // Add more users as needed
   ];
