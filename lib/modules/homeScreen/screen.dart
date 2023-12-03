@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../chatScreen/screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final List<Map<String, dynamic>> userList = [
@@ -39,10 +40,10 @@ class HomeScreen extends StatelessWidget {
         itemCount: userList.length,
         itemBuilder: (context, index) {
           return Card(
-            elevation: 1.0,
+            elevation: 4.0,
             margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
             child: ListTile(
-              contentPadding: EdgeInsets.all(5.0),
+              contentPadding: EdgeInsets.all(16.0),
               leading: CircleAvatar(
                 radius: 30.0,
                 backgroundImage: NetworkImage(userList[index]['avatar']),
@@ -74,9 +75,13 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               onTap: () {
-                // Handle tapping on a user, e.g., navigate to a chat screen
-                // For simplicity, you can print a message for now
-                print('Tapped on ${userList[index]['name']}');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        ChatScreen(userName: userList[index]['name']),
+                  ),
+                );
               },
             ),
           );
