@@ -16,7 +16,7 @@ class _ChatScreenState extends State<ChatScreen> {
     {'sender': 'user', 'message': 'Hi there!', 'timestamp': DateTime.now()},
   ];
 
-  TextEditingController _messageController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
